@@ -66,7 +66,7 @@ cases = folium.Choropleth(geo_data = la_geo,
 	name="NCOV cases",
 	data = cases_by_zip,
 	key_on = 'feature.properties.name',
-	fill_color = 'RdYlGn'
+	fill_color = 'YlOrRd'
 	)
 cases.add_to(m)
 
