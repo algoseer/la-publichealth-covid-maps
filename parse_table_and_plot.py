@@ -26,12 +26,14 @@ for tr in table_rows[1:-1]:
 from collections import defaultdict
 cases_by_zip=defaultdict(int)
 names_by_zip=defaultdict(list)
+rank_by_zip = defaultdict(dict)
 
 for d in locs:
 	zipcode =d["address"].split(', ')[-1]
 
 	cases_by_zip[zipcode]+=int(d["cases"])
 	names_by_zip[zipcode].append(d["name"])
+	rank_by_zip[zipcode].update({d["name"]:d["cases"]})
 
 
 allzips = list(cases_by_zip.keys())
@@ -46,6 +48,9 @@ for i in range(len(data['features'])):
 		dd = data['features'][i]
 		dd['properties']['cases'] = cases_by_zip[dd['properties']['name']]
 		dd['properties']['businesses'] = '_'.join(names_by_zip[dd['properties']['name']])
+		rankdict = rank_by_zip[dd["properties"]["name"]]
+		r = sorted(rankdict, key = rankdict.get)
+		dd['properties']['rankedlist'] = r[-3:]
 		geozips.append(dd)
 
 new_json = dict.fromkeys(['type','features'])
@@ -71,7 +76,7 @@ cases = folium.Choropleth(geo_data = la_geo,
 cases.add_to(m)
 
 
-cases.geojson.add_child(folium.features.GeoJsonTooltip(fields=['name','cases'], aliases=["Zipcode","#Cases"],labels = True))
+cases.geojson.add_child(folium.features.GeoJsonTooltip(fields=['name','cases','rankedlist'], aliases=["Zipcode","#Cases",'top3'],labels = True))
 
 folium.LayerControl().add_to(m)
 
