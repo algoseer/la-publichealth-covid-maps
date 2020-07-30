@@ -65,18 +65,19 @@ with open(la_geo,'w') as fout:
 
 m = folium.Map(location = [34.0522, -118.2437], zoom_start = 11)
 
-cases = folium.Choropleth(geo_data = la_geo,
+log_cases_by_zip = {k:np.log2(cases_by_zip[k]) for k in cases_by_zip}
+
+log_cases = folium.Choropleth(geo_data = la_geo,
 	fill_opacity = 0.7,
 	line_opactiy = 0.2,
-	name="NCOV cases",
-	data = cases_by_zip,
+	name="log NCOV cases",
+	data = log_cases_by_zip,
 	key_on = 'feature.properties.name',
 	fill_color = 'YlOrRd'
 	)
-cases.add_to(m)
+log_cases.add_to(m)
 
-
-cases.geojson.add_child(folium.features.GeoJsonTooltip(fields=['name','cases','rankedlist'], aliases=["Zipcode","#Cases",'top3'],labels = True))
+log_cases.geojson.add_child(folium.features.GeoJsonTooltip(fields=['name','cases','rankedlist'], aliases=["Zipcode","#Cases",'top3'],labels = True))
 
 folium.LayerControl().add_to(m)
 
