@@ -8,7 +8,7 @@ import collections
 source = urllib.request.urlopen('http://ph.lacounty.gov/media/coronavirus/locations.htm#nonres-settings')
 soup = bs.BeautifulSoup(source, features="html.parser")
 
-table = soup.findAll('table', {"class":"table table-striped table-bordered table-sm"})
+table = soup.findAll('table', {"class":"table table-striped table-bordered table-sm overflow-y"})
 
 table_rows = table[2].find_all('tr')
 
