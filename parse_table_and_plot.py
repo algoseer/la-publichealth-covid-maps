@@ -49,8 +49,8 @@ for i in range(len(data['features'])):
 		dd['properties']['cases'] = cases_by_zip[dd['properties']['name']]
 		dd['properties']['businesses'] = '_'.join(names_by_zip[dd['properties']['name']])
 		rankdict = rank_by_zip[dd["properties"]["name"]]
-		r = sorted(rankdict, key = rankdict.get)
-		dd['properties']['rankedlist'] = r[-3:]
+		r = sorted(rankdict, key = rankdict.get, reverse=True)
+		dd['properties']['rankedlist'] = r[:3]
 		geozips.append(dd)
 
 new_json = dict.fromkeys(['type','features'])
