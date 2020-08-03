@@ -33,7 +33,7 @@ for d in locs:
 
 	cases_by_zip[zipcode]+=int(d["cases"])
 	names_by_zip[zipcode].append(d["name"])
-	rank_by_zip[zipcode].update({d["name"]:d["cases"]})
+	rank_by_zip[zipcode].update({d["name"]:int(d["cases"])})
 
 
 allzips = list(cases_by_zip.keys())
