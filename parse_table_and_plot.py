@@ -10,7 +10,7 @@ soup = bs.BeautifulSoup(source, features="html.parser")
 
 table = soup.findAll('table', {"class":"table table-striped table-bordered table-sm overflow-y"})
 
-table_rows = table[2].find_all('tr')
+table_rows = table[3].find_all('tr')
 
 locs=[]
 
@@ -65,7 +65,7 @@ with open(la_geo,'w') as fout:
 
 m = folium.Map(location = [34.0522, -118.2437], zoom_start = 11)
 
-log_cases_by_zip = {k:np.log2(cases_by_zip[k]) for k in cases_by_zip}
+log_cases_by_zip = {k:np.log2(cases_by_zip[k]) for k in cases_by_zip if cases_by_zip[k]>0}
 
 log_cases = folium.Choropleth(geo_data = la_geo,
 	fill_opacity = 0.7,
