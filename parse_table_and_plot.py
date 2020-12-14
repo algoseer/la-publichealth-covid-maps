@@ -22,6 +22,19 @@ for tr in table_rows[1:-1]:
 
 	locs.append(d)
 
+
+#educational settings
+table_rows = table[5].find_all('tr')
+
+for tr in table_rows[1:-1]:
+	td = tr.find_all('td')
+	row = [i.text for i in td]
+	row[3] = str(int(row[3])+int(row[4]))
+
+	d = dict(zip(["id", "name", "address", "cases", "student-cases"], row))
+
+	locs.append(d)
+
 # Parse by zip 
 from collections import defaultdict
 cases_by_zip=defaultdict(int)
